@@ -1,0 +1,10 @@
+1. Używamy Arduino w celu deployowania projektu.
+2. Używamy języka cpp.
+3. Nazwy piszemy w języku angielskim.
+4. Nazwy klas zgodnie z User Stories.
+5. Inicjalizacja zmiennych w miejscu deklaracji.
+6. Stałe definiujemy za pomocą #define.
+7. Char* wykorzystywany do przetwarzania napisów.
+8. Pola klas są prywatne.
+9. Nazwy klas są z dużej litery.
+10. Tabulacja zamiast 3 spacji.
