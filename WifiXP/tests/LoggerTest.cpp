@@ -9,16 +9,34 @@ TEST_CASE("Logger test prepare response", "[prepareResponse]") {
     Logger& logger = Logger::GetInstance();
     char* log = (char *)"TEST";
     char* expectedAnswer = (char *) malloc(400);
-    expectedAnswer =(char *)"<!DOCTYPE html> <script> function showHide(id) {var x = document.getElementById(id);if (x.style.display === \"none\") {  x.style.display = \"block\";} else {  x.style.display = \"none\";}}</script>  <html> <body> <h1>WiFi Searcher</h1> <div id=\"wifi\">TEST</div> </body> </html>";
-    const char* logsFromServer = logger.prepareResponse(log);
-    // cout<< expectedAnswer << endl << logsFromServer;
-    REQUIRE(strcmp(expectedAnswer,logsFromServer) == 1);
+    expectedAnswer =(char *)"<!DOCTYPE html>"
+	"<script> function showHide(id)"
+	"{var x = document.getElementById(id);"
+	"if (x.style.display === \"none\")"
+	"{  x.style.display = \"block\";}"
+	"else {  x.style.display = \"none\";}}"
+	"</script>"
+	"<html>"
+	"<body>"
+	"<h1>WIFI Networks Scanner</h1>"
+	"<div id=\"WIFI\">TEST</div>"
+	"</body>"
+	"</html>";
+    char* logsFromServer = (char *) malloc(400);
+	logsFromServer = (char*)logger.prepareResponse(log);
+    //cout<<"expectedAnswer:"<< endl << expectedAnswer << endl;
+	//cout<<"logsFromServer: "<< endl << logsFromServer << endl;
+    REQUIRE(strcmp(expectedAnswer,logsFromServer) == 0);
 }
 
 TEST_CASE("Logger test start logging", "[startLogging]") {
     Logger& logger = Logger::GetInstance();
-    char* expectedAnswer = (char *)"<div>Number of networks detected: 1<button onclick=\"showHide('0')\">Details</button><div style=\"display:none\" id=\"0\">";
+    char* expectedAnswer = (char *)"<div>Networks detected: 1"
+	"<button onclick=\"showHide('0')\">Details</button>"
+	"<div style=\"display:none\" id=\"0\">";
+	//cout<<"expectedAnswer: "<< endl << expectedAnswer << endl;
     logger.startLogging(1);
+	//cout<<"logsFromServer: "<< endl << logger.getLogs() << endl;
     REQUIRE(strcmp(expectedAnswer, logger.getLogs()) == 0);
 }
 
@@ -27,16 +45,27 @@ TEST_CASE("Logger test add new WiFi", "[addNewWifi]") {
     char* name = (char *)"WIFI_NAME";
     char* strength = (char *)"WIFI_STRENGTH";
     bool isOpen = true;
-    char* expectedAnswer = (char *)"<div>Number of networks detected: 1<button onclick=\"showHide('0')\">Details</button><div style=\"display:none\" id=\"0\">Network name: WIFI_NAME |Signal strength: WIFI_STRENGTH |Network not secured with password<br>\n";
+    char* expectedAnswer = (char *)"<div>Networks detected: 1"
+	"<button onclick=\"showHide('0')\">Details</button>"
+	"<div style=\"display:none\" id=\"0\">"
+	"Network SSID: WIFI_NAME | Network signal strength: WIFI_STRENGTH | "
+	"Not secured with password.<br>\n";
     logger.addNewWifi(name, strength, isOpen);
+	//cout << "expectedAnswer: " << endl << expectedAnswer << endl;
+	//cout << "logger.getLogs(): " << endl << logger.getLogs() << endl;
     REQUIRE(strcmp(expectedAnswer, logger.getLogs()) == 0);
 }
 
 TEST_CASE("Logger test end logging", "[endLogging]") {
     Logger& logger = Logger::GetInstance();
-    char* expectedAnswer = (char *)"<div>Number of networks detected: 1<button onclick=\"showHide('0')\">Details</button><div style=\"display:none\" id=\"0\">Network name: WIFI_NAME |Signal strength: WIFI_STRENGTH |Network not secured with password<br>\n""</div></div>";
+    char* expectedAnswer = (char *)"<div>Networks detected: 1"
+	"<button onclick=\"showHide('0')\">Details</button>"
+	"<div style=\"display:none\" id=\"0\">"
+	"Network SSID: WIFI_NAME | Network signal strength: WIFI_STRENGTH | "
+	"Not secured with password.<br>\n""</div></div>";
     logger.endLogging();
-    //cout<< expectedAnswer << endl << logger.getLogs();
+    //cout << "expectedAnswer: " << endl << expectedAnswer << endl;
+	//cout << "logger.getLogs(): " << endl << logger.getLogs() << endl;
     REQUIRE(strcmp(expectedAnswer, logger.getLogs()) == 0);
 }
 
@@ -45,5 +74,7 @@ TEST_CASE("Logger test clear logs", "[clearLogs]") {
     logger.addNewWifi("WIFI_NAME", "WIFI_STRENGTH", true); //setup
     char* expectedAnswer = (char *)"";
     logger.clearLogs();
+	//cout << "expectedAnswer: " << endl << expectedAnswer << endl;
+	//cout << "logger.getLogs(): " << endl << logger.getLogs() << endl;
     REQUIRE(strcmp(expectedAnswer, logger.getLogs()) == 0);
 }
