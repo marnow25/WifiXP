@@ -63,6 +63,7 @@ void setup() {
     delay(100);
     
     Serial.begin(9600);
+    delay(100);
     Serial.println("START");
     Serial.println("Configuring access point...");
 
@@ -80,8 +81,4 @@ void setup() {
 
 void loop() {
     server.handleClient();
-    for (int i = 0; i < 10; i++) {
-        delay(100);
-        server.handleClient();
-    }
 }
