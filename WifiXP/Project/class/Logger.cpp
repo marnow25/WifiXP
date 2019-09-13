@@ -16,6 +16,7 @@ public:
     const char *getLogs();
     void clearLogs();
     int getCounter();
+	
 };
 
 const char *Logger::prepareResponse(const char *s) {
@@ -31,7 +32,7 @@ const char *Logger::prepareResponse(const char *s) {
 	"<body>"
 	"<h1>WIFI Networks Scanner</h1>"
 	"<div id=\"WIFI\">";
-    response = response + s + "</div> </body> </html>";
+    response = response + s + "</div></body></html>";
     return response.c_str();
 }
 
@@ -58,7 +59,7 @@ void Logger::addNewWifi(const char *name, const char *strength, bool isOpen) {
     log += " | Network signal strength: ";
     log += strength;
     if (isOpen) {
-        log += " | Network not secured with password.";
+        log += " | Not secured with password.";
     }
 	else {
 		log += " | Secured with password.";
