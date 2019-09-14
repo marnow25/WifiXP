@@ -51,24 +51,19 @@ void handlePing() {
 
 
 void setup() {
-    const char *ssid = "WIFI networks scanner";
-    const char *password = "";
 
     IPAddress localIp(192, 168, 1, 1);
     IPAddress gateway(192, 168, 1, 1);
     IPAddress subnet(255, 255, 255, 0);
-
-    WiFi.mode(WIFI_STA);
-    WiFi.disconnect();
-    delay(100);
+    WiFi.softAPConfig(localIp, gateway, subnet);
+    
+    connector.network_connectable(1);
     
     Serial.begin(9600);
-    delay(100);
+    delay(1000);
+    Serial.println("/n");
     Serial.println("START");
     Serial.println("Configuring access point...");
-
-    WiFi.softAP(ssid, password);
-    WiFi.softAPConfig(localIp, gateway, subnet);
 
     IPAddress myIP = WiFi.softAPIP();
     Serial.print("AP IP address: ");
